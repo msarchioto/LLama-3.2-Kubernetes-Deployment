@@ -82,7 +82,6 @@ minikube service llama-chatbot --url
 - Max replicas: 10
 - CPU threshold for scaling: 70%
 - Memory limit: 4Gi per pod
-```
 
 ## Example curl request
 ```bash
