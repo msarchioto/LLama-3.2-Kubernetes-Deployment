@@ -1,0 +1,8 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic==2.4.2
+torch==2.1.0
+transformers==4.34.0
+langchain==0.0.325
+accelerate==0.24.0
+bitsandbytes==0.41.1 

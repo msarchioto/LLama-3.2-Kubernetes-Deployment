@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama-chatbot
+  labels:
+    app: llama-chatbot
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: llama-chatbot
+  template:
+    metadata:
+      labels:
+        app: llama-chatbot
+    spec:
+      containers:
+      - name: llama-chatbot
+        image: llama-chatbot:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        volumeMounts:
+        - name: model-storage
+          mountPath: /app/models
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 15
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: model-pvc 
